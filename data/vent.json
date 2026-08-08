@@ -1,0 +1,12 @@
+{
+  "updated": "2026-07-28T15:00:00+08:00",
+  "date": "2026-07-28",
+  "sample": true,
+  "types": [
+    { "name": "侵襲性", "remaining": 25, "safe": 21, "unit": "台" },
+    { "name": "非侵襲性", "remaining": 8, "safe": 6, "unit": "台" },
+    { "name": "HFNC", "remaining": 4, "safe": 6, "unit": "台" },
+    { "name": "轉送型", "remaining": 3, "safe": null, "unit": "台" }
+  ],
+  "note": "範例資料（sample=true 時 App 會標示為範例）。正式版由呼吸器儀表板 Apps Script 的 JSON 端點提供，欄位需含 date/types[]{name,remaining,safe}。safe=null 表示無安全閾值。"
+}

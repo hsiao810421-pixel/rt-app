@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>中榮 RT 隨身站</title>
+  <meta name="description" content="臺中榮總胸腔部呼吸治療科 資訊整合 App" />
+  <meta name="theme-color" content="#0f766e" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="RT 隨身站" />
+  <link rel="stylesheet" href="styles.css?v=0.3.0" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-header__inner">
+      <div class="brand">
+        <img src="icons/icon-192.png" alt="" class="brand__logo" />
+        <div class="brand__text">
+          <strong id="brandName">RT 隨身站</strong>
+          <span id="brandOrg">臺中榮總 呼吸治療科</span>
+        </div>
+      </div>
+      <button id="installBtn" class="install-btn" hidden>安裝 App</button>
+    </div>
+  </header>
+
+  <main id="view" class="view" aria-live="polite">
+    <div class="loading">載入中…</div>
+  </main>
+
+  <nav class="tabbar" role="navigation" aria-label="主選單">
+    <a href="#/home" class="tab" data-tab="home"><span class="tab__ico">🏠</span><span>首頁</span></a>
+    <a href="#/vent" class="tab" data-tab="vent"><span class="tab__ico">🫁</span><span>呼吸器</span></a>
+    <a href="#/guide" class="tab" data-tab="guide"><span class="tab__ico">📘</span><span>守則</span></a>
+    <a href="#/schedule" class="tab" data-tab="schedule"><span class="tab__ico">📅</span><span>班表</span></a>
+    <a href="#/more" class="tab" data-tab="more"><span class="tab__ico">⋯</span><span>更多</span></a>
+  </nav>
+
+  <script src="app.js?v=0.3.0"></script>
+</body>
+</html>

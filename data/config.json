@@ -1,0 +1,19 @@
+{
+  "appName": "中榮 RT 隨身站",
+  "appShortName": "RT 隨身站",
+  "version": "0.3.0",
+  "org": "臺中榮總 胸腔部 呼吸治療科",
+  "links": {
+    "ventilator": "https://tinyurl.com/vghtc-rtvent",
+    "guideWebsite": "",
+    "guideDoc": "https://docs.google.com/document/d/1lPZdxaWGfJBnmI4AlXYPwgmiJIHcyohfIga86UVjsrE/edit?tab=t.0",
+    "businessGuideDoc": "https://docs.google.com/document/d/1J3NbT6AoW_99JvtHbgdSZPOhi5E68w51Y_WUYatTx_I/mobilebasic",
+    "lineBot": "",
+    "scheduleApp": "https://hsiao810421-pixel.github.io/shift-schedule/",
+    "rtDatabase": ""
+  },
+  "calendarEmbedUrl": "https://calendar.google.com/calendar/embed?src=ccrt.vghtc%40gmail.com&ctz=Asia%2FTaipei",
+  "announcementsCsvUrl": "https://docs.google.com/spreadsheets/d/1kV85bYzGUSJAffoRZN1G3_TEKzXZDNvrE8iF1IazIF8/gviz/tq?tqx=out:csv&headers=1",
+  "ventJsonUrl": "https://script.google.com/macros/s/AKfycbwHHZ6PAaOGgODDkfOtF1E-NQ5DpNckqoAw0J1Acf5OxM_wvttH611gNc2z3reN4-dlrw/exec?format=json",
+  "note": "空字串的項目會顯示 placeholder。calendarEmbedUrl=Google 日曆內嵌網址；announcementsCsvUrl=公告試算表發布的 CSV 網址；ventJsonUrl=呼吸器儀表板 JSON 端點；rtDatabase=Drive 資料夾連結。"
+}
