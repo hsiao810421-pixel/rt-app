@@ -94,7 +94,8 @@ function panelAttend(cfg) {
   const url = cfg.links.scheduleApp;
   const p = panel('attend', '📋 今日出勤', { actionLabel: '進入班表', actionHref: url || undefined });
   if (url) {
-    p._body.appendChild(el('iframe', { class: 'frame', src: url, loading: 'lazy', title: '班表系統' }));
+    const embed = url + (url.includes('?') ? '&' : '?') + 'embed=day';
+    p._body.appendChild(el('iframe', { class: 'frame', src: embed, loading: 'lazy', title: '本日出勤' }));
   } else {
     p._body.appendChild(placeholder('尚未設定班表系統網址'));
   }
@@ -244,8 +245,8 @@ async function viewDashboard() {
   const cfg = await ensureData();
   const dash = el('div', { class: 'dash' });
   dash.appendChild(panelAttend(cfg));
-  dash.appendChild(panelCalendar(cfg));
   dash.appendChild(await panelAnnounce(cfg));
+  dash.appendChild(panelCalendar(cfg));
   dash.appendChild(await panelVent(cfg));
   dash.appendChild(panelDb(cfg));
   dash.appendChild(panelGuides(cfg));

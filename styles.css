@@ -261,11 +261,12 @@ a.card:active { transform: scale(.99); }
 @media (min-width: 900px) {
   .view { max-width: 1200px; }
   .dash {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(6, 1fr);
     grid-template-areas:
-      "attend calendar announce"
-      "vent   vent     vent"
-      "db     guides   knowledge";
+      "attend   attend   attend   announce  announce  announce"
+      "calendar calendar calendar calendar  calendar  calendar"
+      "vent     vent     vent     vent      vent      vent"
+      "db       db       guides   guides    knowledge knowledge";
   }
   .panel--attend { grid-area: attend; }
   .panel--calendar { grid-area: calendar; }
@@ -274,6 +275,7 @@ a.card:active { transform: scale(.99); }
   .panel--db { grid-area: db; }
   .panel--guides { grid-area: guides; }
   .panel--knowledge { grid-area: knowledge; }
-  .panel--attend .frame, .panel--calendar .frame { height: 500px; }
+  .panel--attend .frame { height: 500px; }
+  .panel--calendar .frame { height: 620px; }
   .panel--announce .panel__body--scroll { max-height: 500px; }
 }
