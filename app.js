@@ -146,6 +146,20 @@ function driveThumb(url) {
 function parseImages(cell) {
   return String(cell || '').split(/[\n,]+/).map(driveThumb).filter(Boolean);
 }
+// 日期正規化成 YYYY-MM-DD（相容 2026/8/9、2026-8-9 等）
+function normDate(s) {
+  const m = String(s || '').match(/(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})/);
+  return m ? `${m[1]}-${String(m[2]).padStart(2, '0')}-${String(m[3]).padStart(2, '0')}` : String(s || '').trim();
+}
+// 組別容錯：把「資訊組」「教學組」對應回內建的「資訊」「教學」；認不出的原樣保留
+function canonicalGroup(raw) {
+  const r = String(raw || '').trim();
+  if (!r) return '';
+  if (DEFAULT_GROUPS.includes(r)) return r;
+  const rs = r.replace(/組$/, '');
+  for (const g of DEFAULT_GROUPS) { if (rs === g || r.startsWith(g) || g.startsWith(rs)) return g; }
+  return r;
+}
 
 async function loadAnnouncements(cfg) {
   if (cfg.announcementsCsvUrl) {
@@ -171,8 +185,8 @@ async function loadAnnouncements(cfg) {
             if (!time) time = p.time;
           }
           return {
-            group: gi >= 0 ? (r[gi] || '').trim() : '',
-            date, time,
+            group: canonicalGroup(gi >= 0 ? r[gi] : ''),
+            date: normDate(date), time,
             content: ci >= 0 ? (r[ci] || '').trim() : '',
             images: ii >= 0 ? parseImages(r[ii]) : [],
           };
@@ -188,9 +202,12 @@ async function panelAnnounce(cfg) {
   const p = panel('announce', '📢 各組公告', { scroll: true });
   const data = await loadAnnouncements(cfg);
   if (data.sample) p.querySelector('.panel__title').appendChild(el('span', { class: 'tag-sample' }, '範例'));
-  const groups = (data.groups && data.groups.length) ? data.groups : DEFAULT_GROUPS;
   const byGroup = {};
   (data.items || []).forEach(it => { (byGroup[it.group] = byGroup[it.group] || []).push(it); });
+  // 內建組別順序 + 任何認不出的額外組別（附在後面，避免資料被吃掉）
+  const base = (data.groups && data.groups.length) ? data.groups : DEFAULT_GROUPS;
+  const extras = Object.keys(byGroup).filter(g => g && !base.includes(g));
+  const groups = base.concat(extras);
 
   let any = false;
   groups.forEach(g => {
@@ -214,7 +231,7 @@ async function panelAnnounce(cfg) {
           const gal = el('div', { class: 'ann-imgs' });
           it.images.forEach(src => {
             const a = el('a', { class: 'ann-img-link', href: src, target: '_blank', rel: 'noopener' });
-            a.appendChild(el('img', { class: 'ann-img', src, loading: 'lazy', alt: '公告圖片' }));
+            a.appendChild(el('img', { class: 'ann-img', src, alt: '公告圖片' }));
             gal.appendChild(a);
           });
           item.appendChild(gal);

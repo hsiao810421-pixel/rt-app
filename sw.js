@@ -1,5 +1,5 @@
 /* 中榮 RT 隨身站 — Service Worker (Phase 1: 離線快取) */
-const CACHE = 'rt-app-v0.5.0';
+const CACHE = 'rt-app-v0.5.1';
 const ASSETS = [
   './',
   './index.html',
