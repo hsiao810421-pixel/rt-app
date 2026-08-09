@@ -215,8 +215,17 @@ a.card:active { transform: scale(.99); }
 .ann-item { padding: 6px 0 6px 11px; border-bottom: 1px dashed var(--line); }
 .ann-item:last-child { border-bottom: 0; }
 .ann-item__meta { font-size: 11px; color: var(--muted); }
-.ann-item__content { font-size: 13.5px; white-space: pre-wrap; }
+.ann-item__content { font-size: 13.5px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.ann-item__content a { color: var(--teal); }
+@media (prefers-color-scheme: dark){ .ann-item__content a{ color:#5eead4 } }
 .ann-empty { font-size: 12px; color: var(--muted); padding-left: 11px; }
+.ann-imgs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.ann-img-link { display: block; line-height: 0; }
+.ann-img {
+  width: 96px; height: 96px; object-fit: cover; border-radius: 10px;
+  border: 1px solid var(--line); background: var(--bg);
+}
+.ann-img-link:active { transform: scale(.97); }
 
 /* ventilator tiles */
 .vent-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }

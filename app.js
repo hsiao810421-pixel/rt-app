@@ -119,6 +119,34 @@ function panelCalendar(cfg) {
   return p;
 }
 
+// 把 Google 表單「時間戳記」拆成 date(YYYY-MM-DD) 與 time(HH:MM)
+function parseTimestamp(ts) {
+  const s = String(ts || '').trim();
+  let date = '', time = '';
+  const md = s.match(/(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})/);
+  if (md) date = `${md[1]}-${String(md[2]).padStart(2, '0')}-${String(md[3]).padStart(2, '0')}`;
+  const mt = s.match(/(上午|下午|AM|PM)?\s*(\d{1,2}):(\d{2})/i);
+  if (mt) {
+    let hh = parseInt(mt[2], 10); const mm = mt[3]; const ap = mt[1] || '';
+    if (ap === '下午' || /pm/i.test(ap)) { if (hh < 12) hh += 12; }
+    if (ap === '上午' || /am/i.test(ap)) { if (hh === 12) hh = 0; }
+    time = `${String(hh).padStart(2, '0')}:${mm}`;
+  }
+  return { date, time };
+}
+// Drive 分享連結／檔案 ID → 可顯示縮圖網址；直接圖片網址則原樣回傳
+function driveThumb(url) {
+  const s = String(url || '').trim();
+  if (!s) return null;
+  const m = s.match(/[?&]id=([\w-]{20,})/) || s.match(/\/d\/([\w-]{20,})/) || s.match(/\/file\/d\/([\w-]{20,})/);
+  if (m) return 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w1200';
+  if (/^https?:\/\//i.test(s)) return s;
+  return null;
+}
+function parseImages(cell) {
+  return String(cell || '').split(/[\n,]+/).map(driveThumb).filter(Boolean);
+}
+
 async function loadAnnouncements(cfg) {
   if (cfg.announcementsCsvUrl) {
     try {
@@ -126,12 +154,29 @@ async function loadAnnouncements(cfg) {
       const rows = parseCSV(txt).filter(r => r.some(c => (c || '').trim() !== ''));
       if (rows.length) {
         const head = rows.shift().map(h => (h || '').trim());
-        const idx = (name) => head.findIndex(h => h.includes(name));
-        const gi = idx('組'), di = idx('日期'), ti = idx('時間'), ci = idx('內容');
-        const items = rows.map(r => ({
-          group: (r[gi] || '').trim(), date: (r[di] || '').trim(),
-          time: (r[ti] || '').trim(), content: (r[ci] || '').trim(),
-        })).filter(x => x.content);
+        const findIdx = (pred) => head.findIndex(pred);
+        const isTs = h => /時間戳記|timestamp/i.test(h);
+        const tsIdx = findIdx(isTs);
+        const gi = findIdx(h => h.includes('組'));
+        const ci = findIdx(h => h.includes('內容') || h.includes('公告事項') || h.includes('公告'));
+        const di = findIdx(h => h.includes('日期'));
+        const ti = findIdx(h => h.includes('時間') && !isTs(h));
+        const ii = findIdx(h => h.includes('照片') || h.includes('圖片') || h.includes('圖'));
+        const items = rows.map(r => {
+          let date = di >= 0 ? (r[di] || '').trim() : '';
+          let time = ti >= 0 ? (r[ti] || '').trim() : '';
+          if ((!date || !time) && tsIdx >= 0) {
+            const p = parseTimestamp(r[tsIdx]);
+            if (!date) date = p.date;
+            if (!time) time = p.time;
+          }
+          return {
+            group: gi >= 0 ? (r[gi] || '').trim() : '',
+            date, time,
+            content: ci >= 0 ? (r[ci] || '').trim() : '',
+            images: ii >= 0 ? parseImages(r[ii]) : [],
+          };
+        }).filter(x => x.content || x.images.length);
         return { items, groups: DEFAULT_GROUPS, sample: false };
       }
     } catch (e) { console.warn('公告 CSV 讀取失敗，改用範例', e); }
@@ -160,7 +205,20 @@ async function panelAnnounce(cfg) {
         const item = el('div', { class: 'ann-item' });
         const meta = [fmtDate(it.date), it.time].filter(Boolean).join(' ');
         if (meta) item.appendChild(el('div', { class: 'ann-item__meta' }, esc(meta)));
-        item.appendChild(el('div', { class: 'ann-item__content' }, esc(it.content)));
+        if (it.content) {
+          const linked = esc(it.content).replace(/(https?:\/\/[^\s<]+)/g,
+            '<a href="$1" target="_blank" rel="noopener">$1</a>');
+          item.appendChild(el('div', { class: 'ann-item__content' }, linked));
+        }
+        if (it.images && it.images.length) {
+          const gal = el('div', { class: 'ann-imgs' });
+          it.images.forEach(src => {
+            const a = el('a', { class: 'ann-img-link', href: src, target: '_blank', rel: 'noopener' });
+            a.appendChild(el('img', { class: 'ann-img', src, loading: 'lazy', alt: '公告圖片' }));
+            gal.appendChild(a);
+          });
+          item.appendChild(gal);
+        }
         block.appendChild(item);
       });
     }
