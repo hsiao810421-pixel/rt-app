@@ -17,6 +17,24 @@ const el = (tag, attrs = {}, html) => {
   return n;
 };
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+/* 細線 SVG icon（stroke=currentColor，取代 emoji） */
+const ICONS = {
+  attend: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  calendar: '<rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/>',
+  announce: '<path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>',
+  vent: '<path d="M22 12h-4l-3 8L9 4l-3 8H2"/>',
+  db: '<path d="M3 7.5a2 2 0 0 1 2-2h3.5l2 2.5H19a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+  guides: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
+  knowledge: '<path d="M9 18h6"/><path d="M10 21h4"/><path d="M8.5 14c-1.5-1.2-2.5-3-2.5-5a6 6 0 0 1 12 0c0 2-1 3.8-2.5 5-.7.6-1 1.3-1 2.2H9.5c0-.9-.3-1.6-1-2.2z"/>',
+  book: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
+  doc: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>',
+  chart: '<path d="M4 20V10M10 20V4M16 20v-7"/><path d="M3 20h18"/>',
+  chat: '<path d="M21 11.5a8.4 8.4 0 0 1-9 8 9 9 0 0 1-4-1L3 20l1.5-4.5A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z"/>',
+  bell: '<path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>',
+  info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
+};
+const svgIcon = (name) => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">${ICONS[name] || ''}</svg>`;
 const fmtDate = (iso) => {
   if (!iso) return '';
   try {
@@ -74,6 +92,7 @@ function render(nodes) {
 function panel(area, title, opts = {}) {
   const sec = el('section', { class: 'panel panel--' + area });
   const head = el('div', { class: 'panel__head' });
+  if (opts.icon) head.appendChild(el('span', { class: 'panel__ico' }, svgIcon(opts.icon)));
   head.appendChild(el('div', { class: 'panel__title' }, title));
   if (opts.actionHref) {
     const a = el('a', { class: 'panel__action', href: opts.actionHref });
@@ -92,7 +111,7 @@ function placeholder(msg) { return el('div', { class: 'ph' }, msg); }
 /* ---------- panels ---------- */
 function panelAttend(cfg) {
   const url = cfg.links.scheduleApp;
-  const p = panel('attend', '📋 今日出勤', { actionLabel: '進入班表', actionHref: url || undefined });
+  const p = panel('attend', '今日出勤', { icon: 'attend', actionLabel: '進入班表', actionHref: url || undefined });
   if (url) {
     const embed = url + (url.includes('?') ? '&' : '?') + 'embed=day';
     p._body.appendChild(el('iframe', { class: 'frame', src: embed, loading: 'lazy', title: '本日出勤' }));
@@ -110,7 +129,7 @@ function calendarSrc(url) {
   } catch { return url; }
 }
 function panelCalendar(cfg) {
-  const p = panel('calendar', '🗓️ 行事曆');
+  const p = panel('calendar', '行事曆', { icon: 'calendar' });
   if (cfg.calendarEmbedUrl) {
     p._body.appendChild(el('iframe', { class: 'frame', src: calendarSrc(cfg.calendarEmbedUrl), loading: 'lazy', title: 'Google 日曆', frameborder: '0' }));
   } else {
@@ -199,7 +218,7 @@ async function loadAnnouncements(cfg) {
 }
 
 async function panelAnnounce(cfg) {
-  const p = panel('announce', '📢 各組公告', { scroll: true });
+  const p = panel('announce', '各組公告', { icon: 'announce', scroll: true });
   const data = await loadAnnouncements(cfg);
   if (data.sample) p.querySelector('.panel__title').appendChild(el('span', { class: 'tag-sample' }, '範例'));
   const byGroup = {};
@@ -253,7 +272,7 @@ async function loadVent(cfg) {
 }
 
 async function panelVent(cfg) {
-  const p = panel('vent', '🫁 每日呼吸器剩餘數量', { actionLabel: '詳細', actionHref: cfg.links.ventilator || undefined });
+  const p = panel('vent', '每日呼吸器剩餘數量', { icon: 'vent', actionLabel: '詳細', actionHref: cfg.links.ventilator || undefined });
   const data = await loadVent(cfg);
   if (data.sample) p.querySelector('.panel__title').appendChild(el('span', { class: 'tag-sample' }, '範例'));
   if (data.date) p.querySelector('.panel__head').insertBefore(el('span', { class: 'panel__date' }, fmtDate(data.date)), p.querySelector('.panel__action'));
@@ -265,7 +284,7 @@ async function panelVent(cfg) {
     tile.appendChild(el('div', { class: 'vent-tile__name' }, esc(t.name)));
     tile.appendChild(el('div', { class: 'vent-tile__num' }, `${esc(t.remaining)}<span class="u">${esc(t.unit || '台')}</span>`));
     tile.appendChild(el('div', { class: 'vent-tile__safe' }, t.safe != null ? `安全 ≥ ${esc(t.safe)}` : '無閾值'));
-    if (low) tile.appendChild(el('div', { class: 'vent-tile__warn' }, '⚠ 低於安全值'));
+    if (low) tile.appendChild(el('div', { class: 'vent-tile__warn' }, '低於安全值'));
     grid.appendChild(tile);
   });
   if (!(data.types || []).length) p._body.appendChild(placeholder('尚無資料'));
@@ -275,7 +294,7 @@ async function panelVent(cfg) {
 
 function panelDb(cfg) {
   const url = cfg.links.rtDatabase;
-  const p = panel('db', '📚 RT 資料庫', { actionLabel: '開啟', actionHref: url || undefined });
+  const p = panel('db', 'RT 資料庫', { icon: 'db', actionLabel: '開啟', actionHref: url || undefined });
   p._body.appendChild(url
     ? el('a', { class: 'big-link', href: url, target: '_blank', rel: 'noopener' }, '開啟 Google Drive 資料庫 ↗')
     : placeholder('建置中…（Google Drive 連結待補）'));
@@ -283,17 +302,17 @@ function panelDb(cfg) {
 }
 
 function panelGuides(cfg) {
-  const p = panel('guides', '📖 守則與指引');
+  const p = panel('guides', '守則與指引', { icon: 'guides' });
   const items = [
-    { t: 'RT 常規工作守則', u: cfg.links.guideDoc, ico: '📗' },
-    { t: '業務快速指引', u: cfg.links.businessGuideDoc, ico: '📕' },
+    { t: 'RT 常規工作守則', u: cfg.links.guideDoc, icon: 'book' },
+    { t: '業務快速指引', u: cfg.links.businessGuideDoc, icon: 'doc' },
   ];
   let n = 0;
   items.forEach(it => {
     if (!it.u) return;
     n++;
     const a = el('a', { class: 'link-row', href: it.u, target: '_blank', rel: 'noopener' });
-    a.innerHTML = `<span class="link-row__ico">${it.ico}</span><span class="link-row__t">${esc(it.t)}</span><span class="link-row__chev">↗</span>`;
+    a.innerHTML = `<span class="link-row__ico">${svgIcon(it.icon)}</span><span class="link-row__t">${esc(it.t)}</span><span class="link-row__chev">↗</span>`;
     p._body.appendChild(a);
   });
   if (!n) p._body.appendChild(placeholder('連結待補'));
@@ -301,7 +320,7 @@ function panelGuides(cfg) {
 }
 
 async function panelKnowledge(cfg) {
-  const p = panel('knowledge', '💡 新知識');
+  const p = panel('knowledge', '新知識', { icon: 'knowledge' });
   const kn = await loadJSON('data/knowledge.json').catch(() => ({ items: [] }));
   const items = (kn.items || []).slice(0, 4);
   if (!items.length) { p._body.appendChild(placeholder('先保留，尚無內容')); return p; }
@@ -330,11 +349,11 @@ async function viewDashboard() {
 }
 
 /* ---------- other tabs ---------- */
-function linkCard({ ico, title, sub, href, external = true }) {
+function linkCard({ icon, title, sub, href, external = true }) {
   const c = el('a', { class: 'card', href });
   if (external) { c.setAttribute('target', '_blank'); c.setAttribute('rel', 'noopener'); }
   const row = el('div', { class: 'card__row' });
-  row.appendChild(el('div', { class: 'card__ico' }, ico));
+  row.appendChild(el('div', { class: 'card__ico' }, svgIcon(icon)));
   row.appendChild(el('div', { class: 'card__body' }, `<div class="card__title">${esc(title)}</div><div class="card__sub">${esc(sub)}</div>`));
   row.appendChild(el('div', { class: 'card__chev' }, '›'));
   c.appendChild(row);
@@ -344,9 +363,9 @@ function linkCard({ ico, title, sub, href, external = true }) {
 async function viewVent() {
   const cfg = await ensureData();
   const url = cfg.links.ventilator;
-  const nodes = [el('div', { class: 'section-title' }, '🫁 呼吸器數量')];
+  const nodes = [el('div', { class: 'section-title' }, '呼吸器數量')];
   nodes.push(url
-    ? linkCard({ ico: '📊', title: '每日呼吸器儀表板', sub: '即時台數、警示、歷史趨勢（開啟）', href: url })
+    ? linkCard({ icon: 'chart', title: '每日呼吸器儀表板', sub: '即時台數、警示、歷史趨勢（開啟）', href: url })
     : el('div', { class: 'card' }, '<div class="empty">尚未設定儀表板網址</div>'));
   nodes.push(el('div', { class: 'muted-note' }, '資料每 10 分鐘更新。低於安全閾值會自動示警。'));
   render(nodes);
@@ -354,13 +373,13 @@ async function viewVent() {
 
 async function viewGuide() {
   const cfg = await ensureData();
-  const nodes = [el('div', { class: 'section-title' }, '📘 工作守則與指引')];
+  const nodes = [el('div', { class: 'section-title' }, '工作守則與指引')];
   const guideUrl = cfg.links.guideWebsite || cfg.links.guideDoc;
   nodes.push(guideUrl
-    ? linkCard({ ico: '📗', title: 'RT 常規工作守則', sub: cfg.links.guideWebsite ? '可檢索網頁版（開啟）' : 'Google 文件（開啟）', href: guideUrl })
-    : el('div', { class: 'card' }, '<div class="card__row"><div class="card__ico">📗</div><div class="card__body"><div class="card__title">RT 常規工作守則</div><div class="card__sub">連結待補</div></div></div>'));
+    ? linkCard({ icon: 'book', title: 'RT 常規工作守則', sub: cfg.links.guideWebsite ? '可檢索網頁版（開啟）' : 'Google 文件（開啟）', href: guideUrl })
+    : el('div', { class: 'card' }, `<div class="card__row"><div class="card__ico">${svgIcon('book')}</div><div class="card__body"><div class="card__title">RT 常規工作守則</div><div class="card__sub">連結待補</div></div></div>`));
   if (cfg.links.businessGuideDoc)
-    nodes.push(linkCard({ ico: '📕', title: '業務快速指引', sub: '流程圖與 SOP（Google 文件，開啟）', href: cfg.links.businessGuideDoc }));
+    nodes.push(linkCard({ icon: 'doc', title: '業務快速指引', sub: '流程圖與 SOP（Google 文件，開啟）', href: cfg.links.businessGuideDoc }));
   render(nodes);
 }
 
@@ -368,7 +387,7 @@ async function viewSchedule() {
   const cfg = await ensureData();
   const url = cfg.links.scheduleApp;
   const nodes = [el('div', { class: 'section-title-row' },
-    '<span class="section-title" style="margin:0">📅 班表系統</span>')];
+    '<span class="section-title" style="margin:0">班表系統</span>')];
   if (url) {
     const a = el('a', { class: 'panel__action', href: url, target: '_blank', rel: 'noopener' }, '開新視窗 ↗');
     nodes[0].appendChild(a);
@@ -384,13 +403,13 @@ async function viewMore() {
   const cfg = await ensureData();
   const nodes = [el('div', { class: 'section-title' }, '更多功能')];
   nodes.push(cfg.links.lineBot
-    ? linkCard({ ico: '💬', title: 'RT LINE 問答機器人', sub: 'AI 依科內文件回答（加好友）', href: cfg.links.lineBot })
-    : el('div', { class: 'card' }, '<div class="card__row"><div class="card__ico">💬</div><div class="card__body"><div class="card__title">RT LINE 問答機器人</div><div class="card__sub">加好友連結待補</div></div></div>'));
+    ? linkCard({ icon: 'chat', title: 'RT LINE 問答機器人', sub: 'AI 依科內文件回答（加好友）', href: cfg.links.lineBot })
+    : el('div', { class: 'card' }, `<div class="card__row"><div class="card__ico">${svgIcon('chat')}</div><div class="card__body"><div class="card__title">RT LINE 問答機器人</div><div class="card__sub">加好友連結待補</div></div></div>`));
   if (cfg.links.rtDatabase)
-    nodes.push(linkCard({ ico: '📚', title: 'RT 資料庫', sub: 'Google Drive 文件（開啟）', href: cfg.links.rtDatabase }));
+    nodes.push(linkCard({ icon: 'db', title: 'RT 資料庫', sub: 'Google Drive 文件（開啟）', href: cfg.links.rtDatabase }));
 
   nodes.push(el('div', { class: 'section-title' }, '通知'));
-  nodes.push(el('div', { class: 'card' }, '<div class="card__row"><div class="card__ico">🔔</div><div class="card__body"><div class="card__title">推播通知</div><div class="card__sub">公告更新時通知我（Phase 3 開通）</div></div></div>'));
+  nodes.push(el('div', { class: 'card' }, `<div class="card__row"><div class="card__ico">${svgIcon('bell')}</div><div class="card__body"><div class="card__title">推播通知</div><div class="card__sub">公告更新時通知我（Phase 3 開通）</div></div></div>`));
 
   nodes.push(el('div', { class: 'section-title' }, '關於'));
   nodes.push(el('div', { class: 'card' },

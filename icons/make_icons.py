@@ -3,22 +3,14 @@ from PIL import Image, ImageDraw, ImageFont
 import os, math
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-TEAL = (15, 118, 110)
-TEAL2 = (13, 148, 136)
+# 中榮品牌主色（平色，無漸層）—— 與班表系統一致
+TEAL = (5, 132, 130)     # #058482
 WHITE = (255, 255, 255)
 
 
 def vgrad(size, top, bot):
-    img = Image.new("RGB", (size, size), top)
-    for y in range(size):
-        t = y / (size - 1)
-        r = int(top[0] + (bot[0] - top[0]) * t)
-        g = int(top[1] + (bot[1] - top[1]) * t)
-        b = int(top[2] + (bot[2] - top[2]) * t)
-        for x in range(size):
-            pass
-        img.paste((r, g, b), (0, y, size, y + 1))
-    return img
+    # 保留函式名，但改為平色填滿（去除 AI 味漸層）
+    return Image.new("RGB", (size, size), top)
 
 
 def rounded_mask(size, radius):
@@ -51,7 +43,7 @@ def draw_lungs(d, cx, cy, s, color):
 
 def make(size, maskable=False):
     ss = size * 4  # supersample
-    img = vgrad(ss, TEAL, TEAL2).convert("RGBA")
+    img = vgrad(ss, TEAL, TEAL).convert("RGBA")
     d = ImageDraw.Draw(img)
     pad = ss * (0.20 if maskable else 0.0)  # maskable 留安全區
     s = (ss - 2 * pad) * 0.34
