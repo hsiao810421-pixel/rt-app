@@ -293,11 +293,9 @@ async function panelVent(cfg) {
 }
 
 function panelDb(cfg) {
-  const url = cfg.links.rtDatabase;
-  const p = panel('db', 'RT 資料庫', { icon: 'db', actionLabel: '開啟', actionHref: url || undefined });
-  p._body.appendChild(url
-    ? el('a', { class: 'big-link', href: url, target: '_blank', rel: 'noopener' }, '開啟 Google Drive 資料庫 ↗')
-    : placeholder('建置中…（Google Drive 連結待補）'));
+  const p = panel('db', 'RT 資料庫', { icon: 'db' });
+  p._body.appendChild(el('div', { class: 'db-panel-sub' }, 'KM 連結目錄：科知識館 15 分類、SOP 二/三階、常用文件，可搜尋。'));
+  p._body.appendChild(el('a', { class: 'big-link', href: '#/database' }, '開啟資料庫 →'));
   return p;
 }
 
@@ -405,8 +403,7 @@ async function viewMore() {
   nodes.push(cfg.links.lineBot
     ? linkCard({ icon: 'chat', title: 'RT LINE 問答機器人', sub: 'AI 依科內文件回答（加好友）', href: cfg.links.lineBot })
     : el('div', { class: 'card' }, `<div class="card__row"><div class="card__ico">${svgIcon('chat')}</div><div class="card__body"><div class="card__title">RT LINE 問答機器人</div><div class="card__sub">加好友連結待補</div></div></div>`));
-  if (cfg.links.rtDatabase)
-    nodes.push(linkCard({ icon: 'db', title: 'RT 資料庫', sub: 'Google Drive 文件（開啟）', href: cfg.links.rtDatabase }));
+  nodes.push(linkCard({ icon: 'db', title: 'RT 資料庫', sub: 'KM 連結目錄（分類 · SOP · 常用文件）', href: '#/database', external: false }));
 
   nodes.push(el('div', { class: 'section-title' }, '通知'));
   nodes.push(el('div', { class: 'card' }, `<div class="card__row"><div class="card__ico">${svgIcon('bell')}</div><div class="card__body"><div class="card__title">推播通知</div><div class="card__sub">公告更新時通知我（Phase 3 開通）</div></div></div>`));
@@ -418,12 +415,60 @@ async function viewMore() {
   render(nodes);
 }
 
+async function viewDatabase() {
+  await ensureData();
+  const db = await loadJSON('data/database.json').catch(() => ({ groups: [] }));
+  const groups = db.groups || [];
+  const total = groups.reduce((n, g) => n + (g.items || []).length, 0);
+
+  const wrap = el('div', { class: 'fade-in' });
+  const head = el('div', { class: 'section-title-row' });
+  head.appendChild(el('span', { class: 'section-title', style: 'margin:0' }, 'RT 資料庫'));
+  head.appendChild(el('a', { class: 'panel__action', href: '#/home' }, '← 回首頁'));
+  wrap.appendChild(head);
+  if (db.note) wrap.appendChild(el('div', { class: 'db-note' }, esc(db.note)));
+
+  const search = el('input', { class: 'db-search', type: 'search', placeholder: `搜尋 ${total} 筆文件／分類…`, 'aria-label': '搜尋資料庫' });
+  wrap.appendChild(search);
+  const list = el('div', {});
+  wrap.appendChild(list);
+
+  const draw = (q) => {
+    list.innerHTML = '';
+    const query = (q || '').trim().toLowerCase();
+    let shown = 0;
+    groups.forEach(g => {
+      const items = (g.items || []).filter(it => !query || it.name.toLowerCase().includes(query));
+      if (!items.length) return;
+      shown += items.length;
+      const sec = el('section', { class: 'acc' + (query ? ' is-open' : '') });
+      const btn = el('button', { class: 'acc__head', type: 'button' });
+      btn.innerHTML = `<span class="acc__ico">${svgIcon(g.type === 'folder' ? 'db' : 'doc')}</span><span class="acc__title">${esc(g.title)}</span><span class="acc__count">${items.length}</span><span class="acc__chev">▾</span>`;
+      const body = el('div', { class: 'acc__body' });
+      items.forEach(it => {
+        const a = el('a', { class: 'link-row', href: it.url, target: '_blank', rel: 'noopener' });
+        a.innerHTML = `<span class="link-row__t">${esc(it.name)}</span><span class="link-row__chev">↗</span>`;
+        body.appendChild(a);
+      });
+      btn.addEventListener('click', () => sec.classList.toggle('is-open'));
+      sec.appendChild(btn); sec.appendChild(body);
+      list.appendChild(sec);
+    });
+    if (!shown) list.appendChild(el('div', { class: 'empty' }, '找不到符合的項目'));
+    else if (!query) { const f = list.querySelector('.acc'); if (f) f.classList.add('is-open'); }
+  };
+  draw('');
+  search.addEventListener('input', () => draw(search.value));
+  render(wrap);
+}
+
 /* ---------- router ---------- */
-const routes = { home: viewDashboard, vent: viewVent, guide: viewGuide, schedule: viewSchedule, more: viewMore };
+const routes = { home: viewDashboard, vent: viewVent, guide: viewGuide, schedule: viewSchedule, more: viewMore, database: viewDatabase };
 async function route() {
   const hash = (location.hash || '#/home').replace('#/', '');
   const name = routes[hash] ? hash : 'home';
-  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('is-active', t.dataset.tab === name));
+  const tabName = name === 'database' ? 'more' : name;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('is-active', t.dataset.tab === tabName));
   window.scrollTo(0, 0);
   view.innerHTML = '<div class="loading">載入中…</div>';
   try { await routes[name](); }

@@ -1,0 +1,199 @@
+{
+  "updated": "2026-08-11",
+  "note": "以下為中榮 KM 連結，需院內網路並登入後開啟。",
+  "source": "https://km.vghtc.gov.tw/default/listfolders.aspx?uid=84",
+  "groups": [
+    {
+      "title": "科知識館分類",
+      "type": "folder",
+      "items": [
+        {
+          "name": "行政會議紀錄",
+          "url": "https://km.vghtc.gov.tw/default/listfolders.aspx?uid=1914"
+        },
+        {
+          "name": "團隊會議專責呼吸治療師",
+          "url": "https://km.vghtc.gov.tw/default/listfolders.aspx?uid=151139"
+        },
+        {
+          "name": "排班細則",
+          "url": "https://km.vghtc.gov.tw/default/listfolders.aspx?uid=86485"
+        },
+        {
+          "name": "RT班表 (2017開始)",
+          "url": "https://km.vghtc.gov.tw/default/listfolders.aspx?uid=97877"
+        },
+        {
+          "name": "臨床教學研討",
+          "url": "https://km.vghtc.gov.tw/default/listfolders.aspx?uid=1980"
+        },
+        {
+          "name": "教學訓練計畫（含證書）",
+          "url": "https://km.vghtc.gov.tw/default/listfolders.aspx?uid=45225"
+        },
+        {
+          "name": "各CU指標檢討",
+          "url": "https://km.vghtc.gov.tw/default/listfolders.aspx?uid=117461"
+        },
+        {
+          "name": "RCC 亞急性呼吸照護病房",
+          "url": "https://km.vghtc.gov.tw/default/listfolders.aspx?uid=49943"
+        },
+        {
+          "name": "大事記/月月有成績/得獎榮譽",
+          "url": "https://km.vghtc.gov.tw/default/listfolders.aspx?uid=5158"
+        },
+        {
+          "name": "呼吸照護服務感染管制作業",
+          "url": "https://km.vghtc.gov.tw/default/listfolders.aspx?uid=52778"
+        },
+        {
+          "name": "職業安全衛生",
+          "url": "https://km.vghtc.gov.tw/default/listfolders.aspx?uid=118400"
+        },
+        {
+          "name": "COVID-19呼吸照護(2020)",
+          "url": "https://km.vghtc.gov.tw/default/listfolders.aspx?uid=118100"
+        },
+        {
+          "name": "呼吸治療儀器操作使用手冊",
+          "url": "https://km.vghtc.gov.tw/default/listfolders.aspx?uid=55697"
+        },
+        {
+          "name": "歷史資料",
+          "url": "https://km.vghtc.gov.tw/default/listfolders.aspx?uid=150958"
+        },
+        {
+          "name": "團體績效獎金實施規定",
+          "url": "https://km.vghtc.gov.tw/default/listfolders.aspx?uid=163790"
+        }
+      ]
+    },
+    {
+      "title": "二階 SOP（管理程序書）",
+      "type": "doc",
+      "items": [
+        {
+          "name": "胸腔部-RT-醫療照護-2013 協助居家呼吸治療管理程序書(G版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=424132"
+        },
+        {
+          "name": "胸腔部-RT-設備管理-2003 衛材庫房管理程序書(F版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=424096"
+        },
+        {
+          "name": "胸腔部-RT-教育訓練-2002 呼吸治療實習生訓練管理程序書(E版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=424091"
+        },
+        {
+          "name": "胸腔部-RT-醫療照護-2016 加護病房轉亞急性呼吸照護病房及呼吸照護病房流程(F版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=424137"
+        },
+        {
+          "name": "胸腔部-RT-醫療照護-2002 呼吸治療科會診管理程序書(F版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=424103"
+        },
+        {
+          "name": "胸腔部-RT-工作常規-2002 呼吸治療科會議管理程序書(G版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=424088"
+        },
+        {
+          "name": "胸腔部-RT-醫療照護-2007 手術前後肺復原管理程序書(E版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=424116"
+        },
+        {
+          "name": "胸腔部-RT-教育訓練-2001 新進呼吸治療師訓練管理程序書(G版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=424090"
+        },
+        {
+          "name": "胸腔部-RT-醫療照護-2001 呼吸治療科病情交班管理程序書(G版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=424101"
+        },
+        {
+          "name": "胸腔部-RT-醫療照護-2015 呼吸器依賴患者整合性照護系統管理程序書(F版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=424136"
+        },
+        {
+          "name": "胸腔部-RT-醫療照護-2003 全院病人呼吸器使用管理程序書(G版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=424105"
+        },
+        {
+          "name": "胸腔部-RT-醫療照護-2011 高頻胸廓震盪呼吸道清潔管理程序書(F版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=424127"
+        },
+        {
+          "name": "胸腔部-RT-醫療照護-2004 協助使用呼吸器病人轉送管理程序書(F版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=424108"
+        },
+        {
+          "name": "胸腔部-RT-工作常規-2001 呼吸治療科品質目標管理程序書(G版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=424085"
+        },
+        {
+          "name": "內科部-RT-醫療照護-2005 住院病人呼吸器脫離管理程序書(F版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=424111"
+        },
+        {
+          "name": "胸腔部-RT-醫療照護-2008 氧氣治療管理程序書(F版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=424118"
+        },
+        {
+          "name": "內科部-RT-醫療照護-2012 呼吸治療感染處置管理程序書(F版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=424130"
+        },
+        {
+          "name": "內科部-RT-設備管理-2001 呼吸治療科儀器設備維護管理程序書(D版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=424093"
+        }
+      ]
+    },
+    {
+      "title": "三階 SOP（作業指導書）",
+      "type": "doc",
+      "items": [
+        {
+          "name": "內科部-RT-工作常規-3004_呼吸器警示系統異常聲響作業指導書(C版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=764066"
+        },
+        {
+          "name": "胸腔部-RT-醫療照護-3003_人工氣道氣囊壓力控制作業指導書(B版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=926355"
+        },
+        {
+          "name": "胸腔部-RT-醫療照護-3002_藥物吸入作業指導書(B版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=919044"
+        },
+        {
+          "name": "胸腔部-RT-工作常規-3005 機械通氣潮溼器使用管理程序書(B版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=930188"
+        },
+        {
+          "name": "胸腔部-RT-醫療照護-3001呼吸器困難脫離個案轉入評估-特定預立醫療流程(D版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=849337"
+        },
+        {
+          "name": "胸腔部-RT-工作常規-3003 亞急性呼吸照護病房個案管理作業(D版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=612440"
+        },
+        {
+          "name": "內科部-RT-人員管理-3001 呼吸治療師排班作業辦法(A版)",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=950779"
+        }
+      ]
+    },
+    {
+      "title": "常用文件",
+      "type": "doc",
+      "items": [
+        {
+          "name": "2024 年-業務快速指引-內科部呼吸治療科",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=932783"
+        },
+        {
+          "name": "2023年 組織架構配置-內科部呼吸治療科",
+          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=776377"
+        }
+      ]
+    }
+  ]
+}
