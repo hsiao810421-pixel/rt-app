@@ -1,11 +1,12 @@
 {
-  "updated": "2026-08-11",
-  "note": "以下為中榮 KM 連結，需院內網路並登入後開啟。",
+  "updated": "2026-08-13",
   "source": "https://km.vghtc.gov.tw/default/listfolders.aspx?uid=84",
+  "note": "KM 連結需院內網路並登入後開啟；Drive 文件（標「可下載」）院內外皆可開啟／下載。",
   "groups": [
     {
       "title": "科知識館分類",
       "type": "folder",
+      "source": "km",
       "items": [
         {
           "name": "行政會議紀錄",
@@ -72,6 +73,7 @@
     {
       "title": "二階 SOP（管理程序書）",
       "type": "doc",
+      "source": "km",
       "items": [
         {
           "name": "胸腔部-RT-醫療照護-2013 協助居家呼吸治療管理程序書(G版)",
@@ -150,6 +152,7 @@
     {
       "title": "三階 SOP（作業指導書）",
       "type": "doc",
+      "source": "km",
       "items": [
         {
           "name": "內科部-RT-工作常規-3004_呼吸器警示系統異常聲響作業指導書(C版)",
@@ -182,16 +185,106 @@
       ]
     },
     {
-      "title": "常用文件",
+      "title": "科內規範",
       "type": "doc",
+      "source": "drive",
+      "folderUrl": "https://drive.google.com/drive/folders/1LaWiLBW2XZjVWf0rK0noj5HSI5fGxr-z",
       "items": [
         {
-          "name": "2024 年-業務快速指引-內科部呼吸治療科",
-          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=932783"
+          "name": "胸腔部呼吸治療科組織架構及職掌遴選細則_1141015_V1.pdf",
+          "url": "https://drive.google.com/file/d/1f3fUPEHwN6vzoEUtGQ3xYoM2W8KCrH1n/view"
         },
         {
-          "name": "2023年 組織架構配置-內科部呼吸治療科",
-          "url": "https://km.vghtc.gov.tw/default/readdocument.aspx?documentId=776377"
+          "name": "臺中榮民總醫院呼吸治療科排班細則_20231207更新.pdf",
+          "url": "https://drive.google.com/file/d/1bH1y64szMwQjnZJqgtoCJKXLckJLwwSN/view"
+        },
+        {
+          "name": "績優呼吸治療師選拔作業要點_114.0805暫修訂版.pdf",
+          "url": "https://drive.google.com/file/d/1j0QoSIK4JnDS_zcMNCBqmAlZvcbrLhvz/view"
+        },
+        {
+          "name": "2025 呼吸治療師二年期訓練計畫書 1141008 3位新人版.pdf",
+          "url": "https://drive.google.com/file/d/1k93gR1BnzRa81AJly4p7yEncFAQRpFOc/view"
+        },
+        {
+          "name": "工作區域11405.pdf",
+          "url": "https://drive.google.com/file/d/1pI51IW4ipeMAb7jtkh7eKNnCQXzHRdhG/view"
+        },
+        {
+          "name": "夜班區域11405.pdf",
+          "url": "https://drive.google.com/file/d/1bakI_AoFvCn05juxSGJpl4ZaMMaLnKi-/view"
+        }
+      ]
+    },
+    {
+      "title": "院部規範",
+      "type": "doc",
+      "source": "drive",
+      "folderUrl": "https://drive.google.com/drive/folders/1pZlOBj2HqlyljgsS6BcBvDV5sAtEy7Ho",
+      "items": [
+        {
+          "name": "臺中榮民總醫院各種假別天數一覽表(20260327).pdf",
+          "url": "https://drive.google.com/file/d/1BHaMRDvCABxElSoOKbOK6RsqnFWo2PXd/view"
+        },
+        {
+          "name": "臺中榮民總醫院「奉派公差」「奉派公假」「奉准公假」認定標準表-20250804.pdf",
+          "url": "https://drive.google.com/file/d/1Tx_7sbtUXcz89bKsTsm0kpsnRJIe8BF8/view"
+        },
+        {
+          "name": "中榮_颱風天停止上班因業務需要出勤搭乘計程車費用申請表.doc",
+          "url": "https://drive.google.com/file/d/1MLclT67N0Ejv4m2c7XqG1TSLVgeMoSVe/view"
+        },
+        {
+          "name": "「表單流程引擎」差勤表單操作說明.pptx",
+          "url": "https://drive.google.com/file/d/1HbwCzvpDxQrQ7N1EYQgijJu3x-cYpNuK/view"
+        },
+        {
+          "name": "附件1_本院醫學研究及論文獎勵要點(含新制)_溯至1140101生效.pdf",
+          "url": "https://drive.google.com/file/d/1jk9_i7MJbZyFhAmQMmyGVXMHDuv34J2z/view"
+        },
+        {
+          "name": "台中榮總呼吸治療教師培育計畫書-1130605四修(KM).pdf",
+          "url": "https://drive.google.com/file/d/1Ii3580X486QkDZi9r8iit7mXTdHu3nOC/view"
+        },
+        {
+          "name": "全人健康照護訓練計畫書(含公文)20240619.pdf",
+          "url": "https://drive.google.com/file/d/1IUkcPFTkD1zSTsFjV0k9AggNcL4h99O4/view"
+        },
+        {
+          "name": "臨床醫事人員培訓計畫師資培育認證作業程序(113年11月04日修正).pdf",
+          "url": "https://drive.google.com/file/d/1txX6HGZ5SxlsJPXf86a4ZNylKhuZ3ORD/view"
+        }
+      ]
+    },
+    {
+      "title": "臨床治療指引",
+      "type": "doc",
+      "source": "drive",
+      "folderUrl": "https://drive.google.com/drive/folders/1ZSfYYbgeQiiYg7r2HpckcvDUfOfCBgNu",
+      "items": [
+        {
+          "name": "ATS ARDS guideline 2023.pdf",
+          "url": "https://drive.google.com/file/d/1UA3PcO1HWAdtweGTVKpzSzfU2LU3JyEE/view"
+        },
+        {
+          "name": "A new definition of ARDS 2023.pdf",
+          "url": "https://drive.google.com/file/d/1jK3X2hNMjgLa1a3SS63KF-rQWUsmtBjw/view"
+        },
+        {
+          "name": "2017-liberation from MV.pdf",
+          "url": "https://drive.google.com/file/d/12AE_38Y2bzA8TIWtzPxALT5Hsw8_Whbq/view"
+        }
+      ]
+    },
+    {
+      "title": "衛福部公文",
+      "type": "doc",
+      "source": "drive",
+      "folderUrl": "https://drive.google.com/drive/folders/1IwIAfzze2AhCO3rpgYGLeAQHvw2aRnci",
+      "items": [
+        {
+          "name": "公文1150209(衛福部-醫事人員續教育時間納入工時及給予公假).pdf",
+          "url": "https://drive.google.com/file/d/1UKuxxczp-j8GpEIuzjm0tGYiaxBd_mCe/view"
         }
       ]
     }

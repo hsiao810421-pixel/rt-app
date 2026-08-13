@@ -231,6 +231,11 @@ a.card:active { transform: scale(.995); }
 .acc__ico { color: var(--teal); font-size: 17px; display: inline-flex; }
 .acc__title { font-weight: 700; font-size: 14.5px; flex: 1; min-width: 0; }
 .acc__count { font-size: 11px; font-weight: 600; color: var(--teal-deep); background: var(--teal-wash); border-radius: var(--r-chip); padding: 1px 9px; }
+.acc__tag { font-size: 10px; font-weight: 700; border-radius: var(--r-chip); padding: 1px 8px; letter-spacing: .02em; }
+.acc__tag--dl { color: var(--teal-deep); background: var(--teal-wash); }
+.acc__tag--net { color: var(--sun); background: var(--sun-wash); }
+.link-row--folder { font-weight: 600; }
+.link-row--folder .link-row__t { color: var(--teal-deep); }
 .acc__chev { color: var(--ink-3); transition: transform .18s var(--ease); }
 .acc.is-open .acc__chev { transform: rotate(180deg); }
 .acc__body { display: none; padding: 0 15px 6px; }

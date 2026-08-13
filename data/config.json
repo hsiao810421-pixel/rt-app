@@ -1,7 +1,7 @@
 {
   "appName": "中榮 RT 隨身站",
   "appShortName": "RT 隨身站",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "org": "臺中榮總 胸腔部 呼吸治療科",
   "links": {
     "ventilator": "https://tinyurl.com/vghtc-rtvent",

@@ -294,7 +294,7 @@ async function panelVent(cfg) {
 
 function panelDb(cfg) {
   const p = panel('db', 'RT 資料庫', { icon: 'db' });
-  p._body.appendChild(el('div', { class: 'db-panel-sub' }, 'KM 連結目錄：科知識館 15 分類、SOP 二/三階、常用文件，可搜尋。'));
+  p._body.appendChild(el('div', { class: 'db-panel-sub' }, 'KM 連結（科知識館分類、SOP 二/三階）＋ Drive 可下載文件（科內/院部規範、臨床指引、公文），可搜尋。'));
   p._body.appendChild(el('a', { class: 'big-link', href: '#/database' }, '開啟資料庫 →'));
   return p;
 }
@@ -443,8 +443,16 @@ async function viewDatabase() {
       shown += items.length;
       const sec = el('section', { class: 'acc' + (query ? ' is-open' : '') });
       const btn = el('button', { class: 'acc__head', type: 'button' });
-      btn.innerHTML = `<span class="acc__ico">${svgIcon(g.type === 'folder' ? 'db' : 'doc')}</span><span class="acc__title">${esc(g.title)}</span><span class="acc__count">${items.length}</span><span class="acc__chev">▾</span>`;
+      const tag = g.source === 'drive'
+        ? '<span class="acc__tag acc__tag--dl">可下載</span>'
+        : (g.source === 'km' ? '<span class="acc__tag acc__tag--net">內網</span>' : '');
+      btn.innerHTML = `<span class="acc__ico">${svgIcon(g.type === 'folder' ? 'db' : 'doc')}</span><span class="acc__title">${esc(g.title)}</span>${tag}<span class="acc__count">${items.length}</span><span class="acc__chev">▾</span>`;
       const body = el('div', { class: 'acc__body' });
+      if (g.folderUrl) {
+        const f = el('a', { class: 'link-row link-row--folder', href: g.folderUrl, target: '_blank', rel: 'noopener' });
+        f.innerHTML = `<span class="link-row__ico">${svgIcon('db')}</span><span class="link-row__t">開啟整個資料夾（Drive）</span><span class="link-row__chev">↗</span>`;
+        body.appendChild(f);
+      }
       items.forEach(it => {
         const a = el('a', { class: 'link-row', href: it.url, target: '_blank', rel: 'noopener' });
         a.innerHTML = `<span class="link-row__t">${esc(it.name)}</span><span class="link-row__chev">↗</span>`;
