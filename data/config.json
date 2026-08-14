@@ -1,7 +1,7 @@
 {
   "appName": "中榮 RT 隨身站",
   "appShortName": "RT 隨身站",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "org": "臺中榮總 胸腔部 呼吸治療科",
   "links": {
     "ventilator": "https://tinyurl.com/vghtc-rtvent",
@@ -15,5 +15,6 @@
   "calendarEmbedUrl": "https://calendar.google.com/calendar/embed?src=ccrt.vghtc%40gmail.com&ctz=Asia%2FTaipei",
   "announcementsCsvUrl": "https://docs.google.com/spreadsheets/d/1lgUB-xeXeqtyqOshWDIDWkZ05q2JM6SMPBA8kJeGpK8/gviz/tq?tqx=out:csv&headers=1",
   "ventJsonUrl": "https://script.google.com/macros/s/AKfycbwHHZ6PAaOGgODDkfOtF1E-NQ5DpNckqoAw0J1Acf5OxM_wvttH611gNc2z3reN4-dlrw/exec?format=json",
+  "driveJsonUrl": "",
   "note": "空字串的項目會顯示 placeholder。calendarEmbedUrl=Google 日曆內嵌網址；announcementsCsvUrl=公告試算表發布的 CSV 網址；ventJsonUrl=呼吸器儀表板 JSON 端點；rtDatabase=Drive 資料夾連結。"
 }

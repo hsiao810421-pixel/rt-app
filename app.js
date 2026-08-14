@@ -416,9 +416,23 @@ async function viewMore() {
 }
 
 async function viewDatabase() {
-  await ensureData();
+  const cfg = await ensureData();
   const db = await loadJSON('data/database.json').catch(() => ({ groups: [] }));
-  const groups = db.groups || [];
+  let groups = db.groups || [];
+  // Drive 群組改由 Apps Script 即時取得（丟進 Drive 就同步）；失敗則沿用 database.json 快照
+  if (cfg.driveJsonUrl) {
+    try {
+      const res = await fetch(cfg.driveJsonUrl, { cache: 'no-cache' });
+      if (res.ok) {
+        const live = await res.json();
+        if (live && Array.isArray(live.groups)) {
+          const km = groups.filter(g => g.source !== 'drive');
+          const drive = live.groups.map(g => ({ title: g.title, type: 'doc', source: 'drive', folderUrl: g.folderUrl, items: g.items || [] }));
+          groups = km.concat(drive);
+        }
+      }
+    } catch (e) { console.warn('Drive 清單即時讀取失敗，沿用快照', e); }
+  }
   const total = groups.reduce((n, g) => n + (g.items || []).length, 0);
 
   const wrap = el('div', { class: 'fade-in' });
