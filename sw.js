@@ -1,5 +1,5 @@
 /* 中榮 RT 隨身站 — Service Worker (Phase 1: 離線快取) */
-const CACHE = 'rt-app-v0.8.0';
+const CACHE = 'rt-app-v0.8.1';
 const ASSETS = [
   './',
   './index.html',
@@ -15,6 +15,8 @@ const ASSETS = [
   './data/vent.json',
   './icons/icon-192.png',
   './icons/icon-512.png',
+  './vendor/firebase-app-compat.js',
+  './vendor/firebase-messaging-compat.js',
 ];
 
 self.addEventListener('install', (e) => {
@@ -51,15 +53,25 @@ self.addEventListener('fetch', (e) => {
   }
 });
 
-/* Phase 3 會加入 push 事件處理（Web Push） */
+/* Web Push（FCM）：直接在此處理，不在 SW 內載 Firebase SDK（compat 需要 window，SW 無 window 會失敗） */
 self.addEventListener('push', (e) => {
-  let data = { title: '中榮 RT 隨身站', body: '有新公告' };
-  try { if (e.data) data = e.data.json(); } catch (_) {}
-  e.waitUntil(self.registration.showNotification(data.title, {
-    body: data.body, icon: 'icons/icon-192.png', badge: 'icons/icon-192.png', data: data.url || './'
+  let p = {};
+  try { if (e.data) p = e.data.json(); } catch (_) { try { p = { notification: { body: e.data && e.data.text() } }; } catch (__) {} }
+  const n = p.notification || {};
+  const d = p.data || {};
+  const title = n.title || d.title || '中榮 RT Dashboard';
+  const body = n.body || d.body || '';
+  const url = d.url || (p.fcmOptions && p.fcmOptions.link) || n.click_action || './';
+  e.waitUntil(self.registration.showNotification(title, {
+    body: body, icon: 'icons/icon-192.png', badge: 'icons/icon-192.png',
+    tag: d.tag || 'rt-push', data: { url: url },
   }));
 });
 self.addEventListener('notificationclick', (e) => {
   e.notification.close();
-  e.waitUntil(clients.openWindow(e.notification.data || './'));
+  const url = (e.notification.data && e.notification.data.url) || './';
+  e.waitUntil(clients.matchAll({ type: 'window', includeUncontrolled: true }).then((list) => {
+    for (const c of list) { if ('focus' in c) { try { c.navigate(url); } catch (_) {} return c.focus(); } }
+    if (clients.openWindow) return clients.openWindow(url);
+  }));
 });

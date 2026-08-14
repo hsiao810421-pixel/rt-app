@@ -1,7 +1,7 @@
 {
   "appName": "中榮 RT Dashboard",
   "appShortName": "RT Dashboard",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "org": "臺中榮總 胸腔部 呼吸治療科",
   "links": {
     "ventilator": "https://tinyurl.com/vghtc-rtvent",

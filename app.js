@@ -504,15 +504,16 @@ const FB_VER = '10.12.5';
 let fbMessaging = null;
 function loadScript(src) {
   return new Promise((resolve, reject) => {
-    if ([...document.scripts].some(s => s.src === src)) return resolve();
+    const abs = new URL(src, location.href).href;
+    if ([...document.scripts].some(s => s.src === abs)) return resolve();
     const s = document.createElement('script');
     s.src = src; s.onload = () => resolve(); s.onerror = () => reject(new Error('載入失敗 ' + src));
     document.head.appendChild(s);
   });
 }
 async function initMessaging(fbConf) {
-  await loadScript(`https://www.gstatic.com/firebasejs/${FB_VER}/firebase-app-compat.js`);
-  await loadScript(`https://www.gstatic.com/firebasejs/${FB_VER}/firebase-messaging-compat.js`);
+  await loadScript('vendor/firebase-app-compat.js');
+  await loadScript('vendor/firebase-messaging-compat.js');
   if (!window.firebase.apps.length) window.firebase.initializeApp(fbConf);
   if (!fbMessaging) fbMessaging = window.firebase.messaging();
   return fbMessaging;
@@ -533,8 +534,8 @@ async function enablePush(cfg, setStatus, showToken) {
   setStatus('處理中…');
   try {
     const messaging = await initMessaging(p.firebase);
-    const reg = await navigator.serviceWorker.register('firebase-messaging-sw.js', { scope: './fcm/' });
-    let tries = 0; while (!reg.active && tries++ < 60) { await new Promise(r => setTimeout(r, 100)); }
+    // 用主要的 sw.js 當推播接收者（不另外註冊含 Firebase 的 SW，避免 compat 在 SW 內找不到 window）
+    const reg = await navigator.serviceWorker.ready;
     const perm = await Notification.requestPermission();
     if (perm !== 'granted') { setStatus('你尚未允許通知（可到瀏覽器的網站設定開啟）', 'warn'); return; }
     const token = await messaging.getToken({ vapidKey: p.vapidKey, serviceWorkerRegistration: reg });
