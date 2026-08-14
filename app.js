@@ -406,7 +406,22 @@ async function viewMore() {
   nodes.push(linkCard({ icon: 'db', title: 'RT 資料庫', sub: 'KM 連結目錄（分類 · SOP · 常用文件）', href: '#/database', external: false }));
 
   nodes.push(el('div', { class: 'section-title' }, '通知'));
-  nodes.push(el('div', { class: 'card' }, `<div class="card__row"><div class="card__ico">${svgIcon('bell')}</div><div class="card__body"><div class="card__title">推播通知</div><div class="card__sub">公告更新時通知我（Phase 3 開通）</div></div></div>`));
+  const on = !!localStorage.getItem('rt_push_token');
+  const pushCard = el('div', { class: 'card' });
+  pushCard.innerHTML = `<div class="card__row"><div class="card__ico">${svgIcon('bell')}</div><div class="card__body"><div class="card__title">推播通知</div><div class="card__sub" id="pushStatus">${on ? '✓ 已開啟通知' : '開啟後，公告更新會通知你'}</div></div></div>`;
+  const pushBtn = el('button', { class: 'push-btn', type: 'button' }, on ? '重新啟用／更新' : '開啟通知');
+  const tokenBox = el('div', { class: 'push-token', hidden: 'hidden' });
+  pushCard.appendChild(pushBtn);
+  pushCard.appendChild(tokenBox);
+  nodes.push(pushCard);
+  nodes.push(el('div', { class: 'muted-note', style: 'text-align:left;padding:6px 4px 0' }, 'iPhone 需先「加入主畫面」安裝後，從 App 內開啟才收得到推播；Android／電腦用瀏覽器即可。'));
+  const setPushStatus = (msg, kind) => { const s = document.getElementById('pushStatus'); if (s) { s.textContent = msg; s.className = 'card__sub' + (kind === 'warn' ? ' push-warn' : (kind === 'ok' ? ' push-ok' : '')); } };
+  const showToken = (t) => {
+    tokenBox.hidden = false; tokenBox.innerHTML = '<div class="push-token__label">測試用 token（可複製到 Firebase 主控台傳送測試訊息）</div>';
+    const ta = el('textarea', { class: 'push-token__ta', readonly: 'readonly', rows: '3' }); ta.value = t;
+    tokenBox.appendChild(ta);
+  };
+  pushBtn.addEventListener('click', () => enablePush(cfg, setPushStatus, showToken));
 
   nodes.push(el('div', { class: 'section-title' }, '關於'));
   nodes.push(el('div', { class: 'card' },
@@ -482,6 +497,56 @@ async function viewDatabase() {
   draw('');
   search.addEventListener('input', () => draw(search.value));
   render(wrap);
+}
+
+/* ---------- 推播（Firebase FCM Web Push） ---------- */
+const FB_VER = '10.12.5';
+let fbMessaging = null;
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    if ([...document.scripts].some(s => s.src === src)) return resolve();
+    const s = document.createElement('script');
+    s.src = src; s.onload = () => resolve(); s.onerror = () => reject(new Error('載入失敗 ' + src));
+    document.head.appendChild(s);
+  });
+}
+async function initMessaging(fbConf) {
+  await loadScript(`https://www.gstatic.com/firebasejs/${FB_VER}/firebase-app-compat.js`);
+  await loadScript(`https://www.gstatic.com/firebasejs/${FB_VER}/firebase-messaging-compat.js`);
+  if (!window.firebase.apps.length) window.firebase.initializeApp(fbConf);
+  if (!fbMessaging) fbMessaging = window.firebase.messaging();
+  return fbMessaging;
+}
+function pushSupport() {
+  if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) return 'unsupported';
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const standalone = window.navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
+  if (isIOS && !standalone) return 'ios-need-install';
+  return 'ok';
+}
+async function enablePush(cfg, setStatus, showToken) {
+  const p = cfg.push || {};
+  if (!p.vapidKey || !p.firebase) { setStatus('推播尚未設定完成（缺金鑰）', 'warn'); return; }
+  const sup = pushSupport();
+  if (sup === 'unsupported') { setStatus('此裝置／瀏覽器不支援推播', 'warn'); return; }
+  if (sup === 'ios-need-install') { setStatus('iPhone 請先用 Safari「分享 → 加入主畫面」安裝，再從 App 內開啟通知', 'warn'); return; }
+  setStatus('處理中…');
+  try {
+    const messaging = await initMessaging(p.firebase);
+    const reg = await navigator.serviceWorker.register('firebase-messaging-sw.js', { scope: './fcm/' });
+    let tries = 0; while (!reg.active && tries++ < 60) { await new Promise(r => setTimeout(r, 100)); }
+    const perm = await Notification.requestPermission();
+    if (perm !== 'granted') { setStatus('你尚未允許通知（可到瀏覽器的網站設定開啟）', 'warn'); return; }
+    const token = await messaging.getToken({ vapidKey: p.vapidKey, serviceWorkerRegistration: reg });
+    if (!token) { setStatus('取得推播 token 失敗，請重試', 'warn'); return; }
+    localStorage.setItem('rt_push_token', token);
+    if (p.registerUrl) { try { await fetch(p.registerUrl, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ token: token, ua: navigator.userAgent }) }); } catch (_) {} }
+    try { messaging.onMessage((payload) => { const n = payload.notification || payload.data || {}; new Notification(n.title || '中榮 RT Dashboard', { body: n.body || '', icon: 'icons/icon-192.png' }); }); } catch (_) {}
+    setStatus('✓ 已開啟通知', 'ok');
+    if (showToken) showToken(token);
+  } catch (e) {
+    setStatus('開啟失敗：' + ((e && e.message) || e), 'warn');
+  }
 }
 
 /* ---------- router ---------- */

@@ -125,6 +125,23 @@ a.card:active { transform: scale(.995); }
 .tile__sub { font-size: 11.5px; color: var(--ink-3); }
 
 .muted-note { font-size: 12px; color: var(--ink-3); text-align: center; padding: 14px; }
+
+/* 推播 */
+.push-btn {
+  margin-top: 12px; width: 100%; height: 44px; border: 0; border-radius: var(--r-cell);
+  background: var(--teal); color: #fff; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
+  transition: background .18s var(--ease);
+}
+.push-btn:hover { background: var(--teal-deep); }
+.push-btn:active { transform: scale(.99); }
+.push-ok { color: var(--teal-deep); font-weight: 600; }
+.push-warn { color: var(--sun); }
+.push-token { margin-top: 12px; }
+.push-token__label { font-size: 11.5px; color: var(--ink-3); margin-bottom: 5px; }
+.push-token__ta {
+  width: 100%; font-family: ui-monospace, monospace; font-size: 11px; color: var(--ink);
+  border: 1px solid var(--line-2); border-radius: 8px; padding: 8px; resize: vertical; background: var(--paper);
+}
 .empty { text-align: center; color: var(--ink-3); padding: 30px 10px; font-size: 13.5px; }
 
 /* ================= Dashboard ================= */
