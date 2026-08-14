@@ -20,103 +20,105 @@
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{
-  background:var(--paper); color:var(--ink); line-height:1.65;
+  background:var(--paper); color:var(--ink); line-height:1.78;
   font-family:'IBM Plex Sans','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+  font-size:13.5px;
   -webkit-font-smoothing:antialiased;
 }
 .tnum{font-variant-numeric:tabular-nums}
-strong{font-weight:700;color:var(--teal-ink)}
+strong{font-weight:600;color:var(--teal-ink)}
 
-.wrap{max-width:1060px;margin:0 auto;padding:0 16px 64px}
+.wrap{max-width:1020px;margin:0 auto;padding:0 18px 72px}
 
 /* ── 頁首 ── */
-.top{background:var(--card);border-bottom:1px solid var(--line);margin-bottom:22px}
-.top__in{max-width:1060px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:10px}
-.eyebrow{font-size:10.5px;font-weight:600;letter-spacing:.16em;color:var(--teal);text-transform:uppercase}
-.top__t{font-size:16px;font-weight:700;color:var(--teal-ink);letter-spacing:.02em}
+.top{background:var(--card);border-bottom:1px solid var(--line);margin-bottom:26px}
+.top__in{max-width:1020px;margin:0 auto;padding:13px 18px;display:flex;align-items:center;gap:10px}
+.eyebrow{font-size:9.5px;font-weight:600;letter-spacing:.18em;color:var(--teal);text-transform:uppercase}
+.top__t{font-size:14px;font-weight:700;color:var(--teal-ink);letter-spacing:.03em}
 
 /* ── 標題區 ── */
 .head{background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);
-  box-shadow:var(--sh-card);padding:22px 22px 20px;position:relative;overflow:hidden}
-.head::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--teal)}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-.chip{font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:var(--r-chip);
+  box-shadow:var(--sh-card);padding:26px 28px 24px;position:relative;overflow:hidden}
+.head::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--teal)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;font-weight:600;padding:2px 9px;border-radius:var(--r-chip);line-height:1.7;
   background:var(--teal-wash);color:var(--teal-deep);border:1px solid var(--teal-line)}
 .chip--plain{background:transparent;color:var(--ink-3);border-color:var(--line-2);font-weight:500}
-h1{font-size:clamp(21px,3.4vw,29px);line-height:1.32;margin:0;color:var(--teal-ink);letter-spacing:-.01em}
-.sub{font-size:15px;color:var(--ink-2);margin-top:5px;font-weight:500}
-.lead{margin-top:16px;padding:14px 16px;background:var(--teal-wash);border-radius:var(--r-cell);
-  font-size:15.5px;font-weight:500;color:var(--teal-ink);line-height:1.6}
+h1{font-size:clamp(18px,2.4vw,22px);line-height:1.45;margin:0;color:var(--teal-ink);
+  letter-spacing:.01em;font-weight:700;text-wrap:balance}
+.sub{font-size:13px;color:var(--ink-3);margin-top:4px;font-weight:500;letter-spacing:.02em}
+.lead{margin-top:18px;padding:15px 17px;background:var(--teal-wash);border-radius:var(--r-cell);
+  font-size:13.5px;font-weight:500;color:var(--teal-ink);line-height:1.8}
 
 /* ── 版面 ── */
-.grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px}
+.grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:16px}
 @media(min-width:880px){
   .grid{grid-template-columns:1fr 1fr}
   .grid > .span2{grid-column:1 / -1}
 }
 
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);
-  box-shadow:var(--sh-card);padding:17px 18px}
-.card__h{display:flex;align-items:center;gap:8px;margin:0 0 10px;
-  font-size:13px;font-weight:700;color:var(--teal);letter-spacing:.02em}
-.ico{width:15px;height:15px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.7;
+  box-shadow:var(--sh-card);padding:22px 24px}
+.card__h{display:flex;align-items:center;gap:7px;margin:0 0 14px;
+  font-size:11px;font-weight:600;color:var(--teal);letter-spacing:.12em}
+.ico{width:13px;height:13px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.7;
   stroke-linecap:round;stroke-linejoin:round}
-.card p{margin:0 0 9px;font-size:14.5px;color:var(--ink-2)}
+.card p{margin:0 0 11px;color:var(--ink-2)}
 .card p:last-child{margin-bottom:0}
 ul.list{margin:0;padding:0;list-style:none}
-ul.list li{position:relative;padding-left:16px;margin-bottom:9px;font-size:14.5px;color:var(--ink-2)}
+ul.list li{position:relative;padding-left:15px;margin-bottom:11px;color:var(--ink-2)}
 ul.list li:last-child{margin-bottom:0}
-ul.list li::before{content:"";position:absolute;left:2px;top:9px;width:5px;height:5px;
+ul.list li::before{content:"";position:absolute;left:2px;top:10px;width:4px;height:4px;
   border-radius:50%;background:var(--teal-line)}
 
 /* 分組人數 */
-.arms{display:flex;flex-direction:column;gap:8px;margin:0 0 14px}
-.arm{display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:var(--r-cell);
+.arms{display:flex;flex-direction:column;gap:8px;margin:0 0 16px}
+.arm{display:flex;align-items:center;gap:14px;padding:12px 15px;border-radius:var(--r-cell);
   background:var(--paper);border:1px solid var(--line)}
-.arm__n{font-size:23px;font-weight:700;color:var(--teal);line-height:1;font-variant-numeric:tabular-nums}
-.arm__n small{font-size:12px;font-weight:600;color:var(--ink-3);margin-left:2px}
-.arm__b{min-width:0}
-.arm__name{font-size:14px;font-weight:600;color:var(--teal-ink)}
-.arm__note{font-size:12.5px;color:var(--ink-3);line-height:1.45}
+.arm__n{font-size:19px;font-weight:600;color:var(--teal);line-height:1;font-variant-numeric:tabular-nums}
+.arm__n small{font-size:10.5px;font-weight:500;color:var(--ink-3);margin-left:2px}
+.arm__b{min-width:0;line-height:1.5}
+.arm__name{font-size:13px;font-weight:600;color:var(--teal-ink)}
+.arm__note{font-size:11.5px;color:var(--ink-3)}
 
 /* 基本資料表 */
 .facts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);
   border:1px solid var(--line);border-radius:var(--r-cell);overflow:hidden}
-.fact{background:var(--card);padding:9px 11px}
-.fact__k{font-size:11.5px;color:var(--ink-3);letter-spacing:.02em}
-.fact__v{font-size:15px;font-weight:600;color:var(--teal-ink);font-variant-numeric:tabular-nums}
+.fact{background:var(--card);padding:10px 13px;line-height:1.5}
+.fact__k{font-size:10.5px;color:var(--ink-3);letter-spacing:.04em}
+.fact__v{font-size:13.5px;font-weight:600;color:var(--teal-ink);font-variant-numeric:tabular-nums;margin-top:1px}
 
 /* 主要結果數字盤 */
-.stat{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-cell);padding:14px}
-.stat__label{font-size:12.5px;font-weight:600;color:var(--ink-3);text-align:center;
-  padding-bottom:9px;border-bottom:1px solid var(--line-2);margin-bottom:12px}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-cell);padding:16px}
+.stat__label{font-size:10.5px;font-weight:600;color:var(--ink-3);text-align:center;letter-spacing:.1em;
+  padding-bottom:11px;border-bottom:1px solid var(--line-2);margin-bottom:14px}
 .stat__row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .stat__box{background:var(--card);border:1px solid var(--line);border-radius:var(--r-cell);
-  padding:12px 8px;text-align:center}
-.stat__name{font-size:12.5px;font-weight:600;color:var(--teal-ink);line-height:1.35;min-height:2.7em;
+  padding:14px 8px 12px;text-align:center}
+.stat__name{font-size:11.5px;font-weight:600;color:var(--teal-ink);line-height:1.5;min-height:3em;
   display:flex;align-items:center;justify-content:center}
-.stat__v{font-size:31px;font-weight:700;color:var(--teal);line-height:1.1;font-variant-numeric:tabular-nums}
-.stat__sub{font-size:11.5px;color:var(--ink-3);margin-top:2px;font-variant-numeric:tabular-nums}
-.stat__eff{margin-top:11px;text-align:center;font-size:13px;font-weight:600;color:var(--ink-2);
-  font-variant-numeric:tabular-nums}
-.stat__verdict{margin-top:8px;text-align:center;font-size:12.5px;color:var(--ink-3)}
+.stat__v{font-size:25px;font-weight:600;color:var(--teal);line-height:1.15;font-variant-numeric:tabular-nums}
+.stat__sub{font-size:10.5px;color:var(--ink-3);margin-top:3px;font-variant-numeric:tabular-nums;line-height:1.4}
+.stat__eff{margin-top:14px;text-align:center;font-size:12px;font-weight:600;color:var(--ink-2);
+  font-variant-numeric:tabular-nums;line-height:1.5}
+.stat__verdict{margin-top:5px;text-align:center;font-size:11px;color:var(--ink-3)}
 
 /* 次族群亮點 */
 .hl{border-color:var(--teal-line);background:linear-gradient(180deg,var(--teal-wash),var(--card) 62%)}
 .hl .card__h{color:var(--teal-deep)}
-.hl__t{font-size:16px;font-weight:700;color:var(--teal-ink);margin:0 0 9px;line-height:1.4}
-.caveat{margin-top:11px;padding:10px 12px;border-radius:var(--r-cell);
-  background:var(--sun-wash);border:1px solid #E9CBD2;font-size:13px;color:#7A2E3C;line-height:1.55}
+.hl__t{font-size:14px;font-weight:700;color:var(--teal-ink);margin:0 0 11px;line-height:1.6}
+.caveat{margin-top:14px;padding:12px 14px;border-radius:var(--r-cell);
+  background:var(--sun-wash);border:1px solid #E9CBD2;font-size:12px;color:#7A2E3C;line-height:1.75}
 
 /* RT 實務 */
-.rt{border-color:var(--teal);border-width:1.5px}
+.rt{border-color:var(--teal-line);box-shadow:inset 3px 0 0 var(--teal),var(--sh-card)}
 .rt .card__h{color:var(--teal-deep)}
 .rt ul.list li::before{background:var(--teal)}
-.rt ul.list li{color:var(--ink);font-size:14.5px;margin-bottom:11px}
+.rt ul.list li{color:var(--ink);margin-bottom:13px}
 
 /* 頁尾引用 */
-.cite{margin-top:16px;padding-top:15px;border-top:2px solid var(--teal);
-  font-size:12.5px;color:var(--ink-3);line-height:1.6}
+.cite{margin-top:20px;padding-top:17px;border-top:1px solid var(--teal);
+  font-size:11.5px;color:var(--ink-3);line-height:1.8}
 .cite b{color:var(--ink-2)}
 .cite a{color:var(--teal);text-decoration:none;font-weight:600}
 .cite a:hover{text-decoration:underline}
@@ -185,13 +187,13 @@ function render(d) {
     <div class="facts">
       ${p.baseline.map(f => `<div class="fact"><div class="fact__k">${esc(f.label)}</div><div class="fact__v">${esc(f.value)}</div></div>`).join('')}
     </div>
-    <p style="margin-top:11px;font-size:13.5px">${md(p.criteria)}</p>`;
+    <p style="margin-top:13px;font-size:12.5px">${md(p.criteria)}</p>`;
 
   const how = `
     <p><b>設計：</b>${md(m.design)}</p>
     ${li(m.intervention)}
-    <p style="margin-top:11px"><b>主要指標：</b>${md(m.primary)}<br><b>次要指標：</b>${md(m.secondaryList)}</p>
-    <p style="color:var(--sun);font-size:13.5px">${md(m.note)}</p>`;
+    <p style="margin-top:13px"><b>主要指標：</b>${md(m.primary)}<br><b>次要指標：</b>${md(m.secondaryList)}</p>
+    <p style="color:var(--sun);font-size:12.5px">${md(m.note)}</p>`;
 
   const stat = `
     <div class="stat">
@@ -205,7 +207,7 @@ function render(d) {
           </div>`).join('')}
       </div>
       <div class="stat__eff">${esc(k.effect)}</div>
-      <div class="stat__verdict">兩組無統計差異</div>
+      <div class="stat__verdict">兩組間無統計顯著差異</div>
     </div>
     <div style="margin-top:13px">${li(d.findings.primary)}</div>`;
 
@@ -215,22 +217,22 @@ function render(d) {
     <div class="caveat">${md(d.highlight.caveat)}</div>`;
 
   return head + `<div class="grid">
-    ${card('why','為什麼這篇重要', `<p>${md(d.whyMatter)}</p>`)}
+    ${card('why','研究背景', `<p>${md(d.whyMatter)}</p>`)}
     ${card('found','主要結果', stat)}
-    ${card('who','收了哪些病人', who)}
-    ${card('star','最值得注意的發現', hl, 'hl')}
-    ${card('how','試驗怎麼做', how)}
-    ${card('shield','次要結果與安全性', li(d.findings.secondary) + '<div style="height:11px"></div>' + li(d.findings.safety))}
-    ${card('bulb','這代表什麼', `<p>${md(d.meaning)}</p>`, 'span2')}
-    ${card('star','對我們科的意義', li(d.rtTakeaway), 'span2 rt')}
-    ${card('warn','限制與尚未回答的問題', li(d.limitations), 'span2')}
+    ${card('who','研究對象', who)}
+    ${card('star','關鍵次族群', hl, 'hl')}
+    ${card('how','研究方法', how)}
+    ${card('shield','次要與安全性結果', li(d.findings.secondary) + '<div style="height:13px"></div>' + li(d.findings.safety))}
+    ${card('bulb','結果詮釋', `<p>${md(d.meaning)}</p>`, 'span2')}
+    ${card('star','本科臨床意涵', li(d.rtTakeaway), 'span2 rt')}
+    ${card('warn','研究限制', li(d.limitations), 'span2')}
   </div>
   <div class="cite">
     <b>出處：</b>${esc(d.citation.authors)}. ${esc(d.citation.text)}
     　<a href="${esc(d.citation.url)}" target="_blank" rel="noopener">doi:${esc(d.citation.doi)}</a><br>
     <b>試驗註冊：</b>${esc(d.citation.registry)}　<b>線上發表：</b>${esc(d.citation.published)}
     ${d.coi ? `<div class="coi"><b>利益揭露：</b>${md(d.coi)}</div>` : ''}
-    <div class="coi">本摘要為中榮呼吸治療科內部教學整理（整理者：${esc(d.reader||'—')}，${esc(d.date)}），非原文翻譯；臨床決策請以原文為準。</div>
+    <div class="coi">本摘要係中榮呼吸治療科內部教學整理（整理者：${esc(d.reader||'—')}，${esc(d.date)}），非原文之翻譯；臨床決策應以原文為準。</div>
   </div>`;
 }
 

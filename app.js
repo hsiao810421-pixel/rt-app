@@ -556,7 +556,7 @@ async function enablePush(cfg, setStatus, showToken) {
     const token = await messaging.getToken({ vapidKey: p.vapidKey, serviceWorkerRegistration: reg });
     if (!token) { setStatus('取得推播 token 失敗，請重試', 'warn'); return; }
     localStorage.setItem('rt_push_token', token);
-    if (p.registerUrl) { try { await fetch(p.registerUrl, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ token: token, ua: navigator.userAgent }) }); } catch (_) {} }
+    if (p.registerUrl) { try { await fetch(p.registerUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ token: token, ua: navigator.userAgent }) }); } catch (_) {} }
     try { messaging.onMessage((payload) => { const n = payload.notification || payload.data || {}; new Notification(n.title || '中榮 RT Dashboard', { body: n.body || '', icon: 'icons/icon-192.png' }); }); } catch (_) {}
     setStatus('✓ 已開啟通知', 'ok');
     if (showToken) showToken(token);
