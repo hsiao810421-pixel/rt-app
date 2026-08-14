@@ -410,8 +410,10 @@ async function viewMore() {
   const pushCard = el('div', { class: 'card' });
   pushCard.innerHTML = `<div class="card__row"><div class="card__ico">${svgIcon('bell')}</div><div class="card__body"><div class="card__title">推播通知</div><div class="card__sub" id="pushStatus">${on ? '✓ 已開啟通知' : '開啟後，公告更新會通知你'}</div></div></div>`;
   const pushBtn = el('button', { class: 'push-btn', type: 'button' }, on ? '重新啟用／更新' : '開啟通知');
+  const testBtn = el('button', { class: 'push-btn push-btn--ghost', type: 'button' }, '測試顯示通知');
   const tokenBox = el('div', { class: 'push-token', hidden: 'hidden' });
   pushCard.appendChild(pushBtn);
+  pushCard.appendChild(testBtn);
   pushCard.appendChild(tokenBox);
   nodes.push(pushCard);
   nodes.push(el('div', { class: 'muted-note', style: 'text-align:left;padding:6px 4px 0' }, 'iPhone 需先「加入主畫面」安裝後，從 App 內開啟才收得到推播；Android／電腦用瀏覽器即可。'));
@@ -422,6 +424,19 @@ async function viewMore() {
     tokenBox.appendChild(ta);
   };
   pushBtn.addEventListener('click', () => enablePush(cfg, setPushStatus, showToken));
+  testBtn.addEventListener('click', async () => {
+    try {
+      if (!('Notification' in window) || !('serviceWorker' in navigator)) { setPushStatus('此裝置不支援通知', 'warn'); return; }
+      let perm = Notification.permission;
+      if (perm !== 'granted') perm = await Notification.requestPermission();
+      if (perm !== 'granted') { setPushStatus('尚未允許通知，無法測試', 'warn'); return; }
+      const reg = await navigator.serviceWorker.ready;
+      await reg.showNotification('測試通知 — RT Dashboard', {
+        body: '你看到這則，代表通知顯示正常 ✓', icon: 'icons/icon-192.png', badge: 'icons/icon-192.png', tag: 'rt-test',
+      });
+      setPushStatus('已送出測試通知，請看系統通知列', 'ok');
+    } catch (e) { setPushStatus('測試失敗：' + ((e && e.message) || e), 'warn'); }
+  });
 
   nodes.push(el('div', { class: 'section-title' }, '關於'));
   nodes.push(el('div', { class: 'card' },

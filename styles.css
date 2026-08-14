@@ -134,6 +134,8 @@ a.card:active { transform: scale(.995); }
 }
 .push-btn:hover { background: var(--teal-deep); }
 .push-btn:active { transform: scale(.99); }
+.push-btn--ghost { margin-top: 8px; background: var(--card); color: var(--teal-deep); border: 1px solid var(--line-2); }
+.push-btn--ghost:hover { background: var(--paper); border-color: var(--teal); }
 .push-ok { color: var(--teal-deep); font-weight: 600; }
 .push-warn { color: var(--sun); }
 .push-token { margin-top: 12px; }
