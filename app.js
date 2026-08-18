@@ -553,6 +553,7 @@ async function enablePush(cfg, setStatus, showToken) {
     const reg = await navigator.serviceWorker.ready;
     const perm = await Notification.requestPermission();
     if (perm !== 'granted') { setStatus('你尚未允許通知（可到瀏覽器的網站設定開啟）', 'warn'); return; }
+    try { await messaging.deleteToken(); } catch (_) {} // 清掉可能綁在舊 SW 的過期 token，強制重取
     const token = await messaging.getToken({ vapidKey: p.vapidKey, serviceWorkerRegistration: reg });
     if (!token) { setStatus('取得推播 token 失敗，請重試', 'warn'); return; }
     localStorage.setItem('rt_push_token', token);

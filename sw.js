@@ -1,5 +1,5 @@
 /* 中榮 RT 隨身站 — Service Worker (Phase 1: 離線快取) */
-const CACHE = 'rt-app-v0.8.4';
+const CACHE = 'rt-app-v0.8.5';
 const ASSETS = [
   './',
   './index.html',
@@ -56,12 +56,12 @@ self.addEventListener('fetch', (e) => {
 /* Web Push（FCM）：直接在此處理，不在 SW 內載 Firebase SDK（compat 需要 window，SW 無 window 會失敗） */
 self.addEventListener('push', (e) => {
   let p = {};
-  try { if (e.data) p = e.data.json(); } catch (_) { try { p = { notification: { body: e.data && e.data.text() } }; } catch (__) {} }
+  try { if (e.data) p = e.data.json(); } catch (_) { try { p = { body: e.data && e.data.text() }; } catch (__) {} }
   const n = p.notification || {};
-  const d = p.data || {};
-  const title = n.title || d.title || '中榮 RT Dashboard';
-  const body = n.body || d.body || '';
-  const url = d.url || (p.fcmOptions && p.fcmOptions.link) || n.click_action || './';
+  const d = p.data || {};                 // 資料可能在 .data、也可能在頂層
+  const title = n.title || d.title || p.title || '中榮 RT Dashboard';
+  const body = n.body || d.body || p.body || '';
+  const url = d.url || p.url || (p.fcmOptions && p.fcmOptions.link) || n.click_action || './';
   e.waitUntil(self.registration.showNotification(title, {
     body: body, icon: 'icons/icon-192.png', badge: 'icons/icon-192.png',
     tag: d.tag || 'rt-push', data: { url: url },
