@@ -1,7 +1,7 @@
 {
   "appName": "中榮 RT Dashboard",
   "appShortName": "RT Dashboard",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "org": "臺中榮總 胸腔部 呼吸治療科",
   "links": {
     "ventilator": "https://tinyurl.com/vghtc-rtvent",
@@ -26,7 +26,7 @@
       "appId": "1:523621899495:web:a5fb029ef0e56771891642"
     },
     "vapidKey": "BA5euxHirUnxuRwrsXmi3fER9POtr1_MUbBe4Ya134SrK-fbTvKNgSDfZHz4gFU9Jzy8qTAZpT26PNQH1wjdzv8",
-    "registerUrl": ""
+    "registerUrl": "https://script.google.com/macros/s/AKfycbygnn413BEwFWiQuUjsldR4y5QFWyEAzTJsAkGRGwwdmkzaKmsG317HryaqIixNAdYc/exec"
   },
   "note": "空字串的項目會顯示 placeholder。calendarEmbedUrl=Google 日曆內嵌網址；announcementsCsvUrl=公告試算表發布的 CSV 網址；ventJsonUrl=呼吸器儀表板 JSON 端點；rtDatabase=Drive 資料夾連結。"
 }
