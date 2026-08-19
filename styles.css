@@ -134,6 +134,12 @@ a.card:active { transform: scale(.995); }
 }
 .push-btn:hover { background: var(--teal-deep); }
 .push-btn:active { transform: scale(.99); }
+.push-banner {
+  position: fixed; left: 8px; right: 8px; top: calc(var(--safe-top) + 8px); z-index: 100;
+  background: var(--teal-deep); color: #fff; font-size: 12.5px; line-height: 1.4;
+  padding: 10px 14px; border-radius: var(--r-cell); box-shadow: var(--sh-pop); display: none;
+  word-break: break-all;
+}
 .push-btn--ghost { margin-top: 8px; background: var(--card); color: var(--teal-deep); border: 1px solid var(--line-2); }
 .push-btn--ghost:hover { background: var(--paper); border-color: var(--teal); }
 .push-ok { color: var(--teal-deep); font-weight: 600; }

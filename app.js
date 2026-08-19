@@ -609,5 +609,18 @@ $('#installBtn')?.addEventListener('click', async () => {
     document.title = cfg.appName;
   } catch (_) {}
   await route();
-  if ('serviceWorker' in navigator) { try { await navigator.serviceWorker.register('sw.js'); } catch (_) {} }
+  if ('serviceWorker' in navigator) {
+    try { await navigator.serviceWorker.register('sw.js'); } catch (_) {}
+    navigator.serviceWorker.addEventListener('message', (e) => {
+      if (e.data && e.data.__push) showPushBanner(e.data.raw);
+    });
+  }
 })();
+
+function showPushBanner(raw) {
+  let b = document.getElementById('pushBanner');
+  if (!b) { b = el('div', { id: 'pushBanner', class: 'push-banner' }); document.body.appendChild(b); }
+  b.textContent = '✅ SW 收到推播：' + (raw || '(空)');
+  b.style.display = 'block';
+  setTimeout(() => { if (b) b.style.display = 'none'; }, 15000);
+}

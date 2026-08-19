@@ -1,5 +1,5 @@
 /* 中榮 RT 隨身站 — Service Worker (Phase 1: 離線快取) */
-const CACHE = 'rt-app-v0.8.6';
+const CACHE = 'rt-app-v0.8.7';
 const ASSETS = [
   './',
   './index.html',
@@ -62,6 +62,10 @@ self.addEventListener('push', (e) => {
   const title = n.title || d.title || p.title || '中榮 RT Dashboard';
   const body = n.body || d.body || p.body || ('DEBUG 收到但格式不符：' + raw.slice(0, 140));
   const url = d.url || p.url || (p.fcmOptions && p.fcmOptions.link) || n.click_action || './';
+  // 診斷：通知開著的頁面「SW 收到推播」
+  self.clients.matchAll({ includeUncontrolled: true, type: 'window' })
+    .then((cs) => cs.forEach((c) => c.postMessage({ __push: true, raw: String(raw).slice(0, 220) })))
+    .catch(() => {});
   e.waitUntil(self.registration.showNotification(title, {
     body: body, icon: 'icons/icon-192.png', badge: 'icons/icon-192.png',
     tag: 'rt-push-' + Date.now(), data: { url: url }, requireInteraction: true,
