@@ -1,5 +1,5 @@
 /* 中榮 RT 隨身站 — Service Worker (Phase 1: 離線快取) */
-const CACHE = 'rt-app-v0.8.5';
+const CACHE = 'rt-app-v0.8.6';
 const ASSETS = [
   './',
   './index.html',
@@ -55,16 +55,16 @@ self.addEventListener('fetch', (e) => {
 
 /* Web Push（FCM）：直接在此處理，不在 SW 內載 Firebase SDK（compat 需要 window，SW 無 window 會失敗） */
 self.addEventListener('push', (e) => {
-  let p = {};
-  try { if (e.data) p = e.data.json(); } catch (_) { try { p = { body: e.data && e.data.text() }; } catch (__) {} }
+  let raw = '(no data)', p = {};
+  if (e.data) { try { raw = e.data.text(); } catch (_) {} try { p = JSON.parse(raw); } catch (_) {} }
   const n = p.notification || {};
   const d = p.data || {};                 // 資料可能在 .data、也可能在頂層
   const title = n.title || d.title || p.title || '中榮 RT Dashboard';
-  const body = n.body || d.body || p.body || '';
+  const body = n.body || d.body || p.body || ('DEBUG 收到但格式不符：' + raw.slice(0, 140));
   const url = d.url || p.url || (p.fcmOptions && p.fcmOptions.link) || n.click_action || './';
   e.waitUntil(self.registration.showNotification(title, {
     body: body, icon: 'icons/icon-192.png', badge: 'icons/icon-192.png',
-    tag: d.tag || 'rt-push', data: { url: url },
+    tag: 'rt-push-' + Date.now(), data: { url: url }, requireInteraction: true,
   }));
 });
 self.addEventListener('notificationclick', (e) => {
